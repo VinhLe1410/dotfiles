@@ -42,12 +42,12 @@ setopt hist_find_no_dups
 # Source .profile for universal PATH settings
 [[ -f ~/.profile ]] && source ~/.profile
 
-# pnpm
-export PNPM_HOME="/home/lpvinh/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
+# pnpm 
+# export PNPM_HOME="/home/lpvinh/.local/share/pnpm"
+# case ":$PATH:" in
+#   *":$PNPM_HOME:"*) ;;
+#   *) export PATH="$PNPM_HOME:$PATH" ;;
+# esac
 # pnpm end
 
 # --------------------------------------------------------------------------------
@@ -55,28 +55,31 @@ esac
 # --------------------------------------------------------------------------------
 
 # Replace your current NVM setup with this lazy-loading version
-export NVM_DIR="$HOME/.nvm"
+# export NVM_DIR="$HOME/.nvm"
 
-# Lazy load nvm
-nvm() {
-    unset -f nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    nvm "$@"
-}
+# # Lazy load nvm
+# nvm() {
+#     unset -f nvm
+#     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+#     nvm "$@"
+# }
 
-# Lazy load npm
-npm() {
-    unset -f npm
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    npm "$@"
-}
+# # Lazy load npm
+# npm() {
+#     unset -f npm
+#     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+#     npm "$@"
+# }
 
-# Lazy load node
-node() {
-    unset -f node
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    node "$@"
-}
+# # Lazy load node
+# node() {
+#     unset -f node
+#     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+#     node "$@"
+# }
+
+# ASDF shim path
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 # --------------------------------------------------------------------------------
 # ALIASES
