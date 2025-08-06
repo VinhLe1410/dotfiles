@@ -28,7 +28,7 @@ HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
 setopt appendhistory
-setopt share_history  
+setopt share_history
 setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
@@ -98,19 +98,7 @@ alias ls='eza --icons=always --color=always --long --git --no-filesize --no-user
 alias dir='eza --icons=always --color=always --long --git --no-filesize --no-permissions'
 alias restart-zsh="source ~/.zshrc"
 alias drop-caches="sudo sh -c 'echo 1 > /proc/sys/vm/drop_caches'"
-alias update-cursor="./Applications/cursor/update-cursor.sh"
-alias mirror-android="scrcpy --no-audio &"
 alias dnf='sudo dnf'
-
-# Git aliases
-alias g='git'
-alias ga='git add'
-alias gc='git commit -m'
-alias gs='git status'
-alias gp='git push'
-alias gpl='git pull'
-alias gf='git fetch'
-alias gco='git checkout'
 
 # Navigation aliases
 # Better cd
