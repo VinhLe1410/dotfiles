@@ -1,119 +1,56 @@
-# ================================================================================
-# ZSH CONFIGURATION
-# ================================================================================
-
-# --------------------------------------------------------------------------------
-# PROMPT & THEME CONFIGURATION
-# --------------------------------------------------------------------------------
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
-
-# # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# source ~/zsh_plugins/powerlevel10k/powerlevel10k.zsh-theme
-
-# --------------------------------------------------------------------------------
-# HISTORY CONFIGURATION
-# --------------------------------------------------------------------------------
-
-# Configs for command history
-HISTSIZE=5000
-HISTFILE=~/.zsh_history
-SAVEHIST=$HISTSIZE
-HISTDUP=erase
-setopt appendhistory
-setopt share_history
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_ignore_dups
-setopt hist_find_no_dups
-# setopt hist_ignore_space
-
-# --------------------------------------------------------------------------------
-# ENVIRONMENT VARIABLES & PATH SETUP
-# --------------------------------------------------------------------------------
-
 # Source .profile for universal PATH settings
 [[ -f ~/.profile ]] && source ~/.profile
-
-# pnpm 
-# export PNPM_HOME="/home/lpvinh/.local/share/pnpm"
-# case ":$PATH:" in
-#   *":$PNPM_HOME:"*) ;;
-#   *) export PATH="$PNPM_HOME:$PATH" ;;
-# esac
-# pnpm end
-
-# --------------------------------------------------------------------------------
-# PACKAGE MANAGER SETUP
-# --------------------------------------------------------------------------------
-
-# Replace your current NVM setup with this lazy-loading version
-# export NVM_DIR="$HOME/.nvm"
-
-# # Lazy load nvm
-# nvm() {
-#     unset -f nvm
-#     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-#     nvm "$@"
-# }
-
-# # Lazy load npm
-# npm() {
-#     unset -f npm
-#     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-#     npm "$@"
-# }
-
-# # Lazy load node
-# node() {
-#     unset -f node
-#     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-#     node "$@"
-# }
 
 # ASDF shim path
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
-# --------------------------------------------------------------------------------
-# ALIASES
-# --------------------------------------------------------------------------------
+# Zinit Initialization
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Oh My Posh Theming for ZSH
+eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/base.json)"
+
+# Delete key, opposite to Backspace
+bindkey "^[[3~" delete-char
+
+# Home and End keys
+bindkey "^[[H" beginning-of-line    # Home key
+bindkey "^[OH" beginning-of-line    # Home key (alternative)
+bindkey "^[[F" end-of-line          # End key
+bindkey "^[OF" end-of-line          # End key (alternative)
+
+# Word deletion
+bindkey "^[[3;5~" delete-word       # Ctrl+Delete (delete word forward)
+bindkey "^H" backward-delete-word   # Ctrl+Backspace (delete word backward)
+
+# History cycling
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
 
 # System & Docker aliases
 alias start-docker="sudo systemctl start docker"
 alias kill-docker="sudo systemctl stop docker.socket && sudo systemctl stop docker"
 alias lazydocker='sudo lazydocker'
-alias docker='sudo docker'
-alias docker-compose='sudo docker compose'
+# alias docker='sudo docker'
+# alias docker-compose='sudo docker compose'
 
 # System utilities
 alias rm='rm --preserve-root' 
-alias ls='eza --icons=always --color=always --long --git --no-filesize --no-user --no-time --no-permissions'
-alias dir='eza --icons=always --color=always --long --git --no-filesize --no-permissions'
+alias ls='eza --icons=always --color=always --no-filesize --no-user --no-time --no-permissions'
+alias dir='eza --icons=always --color=always --long --git --no-filesize'
 alias restart-zsh="source ~/.zshrc"
+alias update-cursor="./Applications/cursor/update-cursor.sh"
 alias drop-caches="sudo sh -c 'echo 1 > /proc/sys/vm/drop_caches'"
 alias dnf='sudo dnf'
 
 # Navigation aliases
-# Better cd
-alias cd='z'
 alias home='cd ~'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-alias ......='cd ../../../../..'
-alias .......='cd ../../../../../..'
 
-# --------------------------------------------------------------------------------
-# FUNCTIONS
-# --------------------------------------------------------------------------------
+# fzf alias
+alias fzf='fzf --height 40% --layout reverse --border'
 
 # ADB port forwarding function
 adb-reverse() {
@@ -135,41 +72,52 @@ set-fan() {
     echo level $1 | sudo tee /proc/acpi/ibm/fan
 }
 
-# --------------------------------------------------------------------------------
-# KEY BINDINGS
-# --------------------------------------------------------------------------------
+# Zinit Plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
 
-bindkey "^[[3~" delete-char
+# Add in snippets
+zinit snippet OMZL::git.zsh
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+zinit snippet OMZP::aws
+zinit snippet OMZP::command-not-found
+zinit snippet OMZP::docker
 
-# Home and End keys
-bindkey "^[[H" beginning-of-line    # Home key
-bindkey "^[OH" beginning-of-line    # Home key (alternative)
-bindkey "^[[F" end-of-line          # End key
-bindkey "^[OF" end-of-line          # End key (alternative)
+# Load Completions
+autoload -Uz compinit && compinit
 
-# Word deletion
-bindkey "^[[3;5~" delete-word       # Ctrl+Delete (delete word forward)
-bindkey "^H" backward-delete-word   # Ctrl+Backspace (delete word backward)
+zinit cdreplay -q
 
-# History cycling
-bindkey "^[[A" history-search-backward
-bindkey "^[[B" history-search-forward
+# History
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 
-# --------------------------------------------------------------------------------
-# PLUGINS & INITIALIZATION
-# --------------------------------------------------------------------------------
-
-eval "$(zoxide init zsh)"
-eval "$(thefuck --alias)"
-eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/base.json)"
-eval "$(fzf --zsh)"
-
-autoload -U compinit && compinit
+# Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --icons=always --color=always --long --no-user --no-permissions $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza --icons=always --color=always --long --no-user --no-permissions $realpath'
 
-source ~/zsh_plugins/fzf-tab/fzf-tab.plugin.zsh
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath'
-
-source ~/zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/zsh_plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+# Shell integrations
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
+# pnpm
+export PNPM_HOME="/home/lpvinh/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

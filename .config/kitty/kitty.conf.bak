@@ -36,12 +36,11 @@ window_border_width 2pt
 single_window_padding_width 3
 
 # BEGIN_KITTY_THEME
-# Ayu
+# Adwaita dark
 include current-theme.conf
 # END_KITTY_THEME
 
 background_opacity 1
-
 
 # BEGIN_KITTY_FONTS
 font_family      family="JetBrainsMono Nerd Font"
