@@ -31,11 +31,10 @@ bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
 
 # System & Docker aliases
+alias docker="sudo docker"
 alias start-docker="sudo systemctl start docker"
 alias kill-docker="sudo systemctl stop docker.socket && sudo systemctl stop docker"
 alias lazydocker='sudo lazydocker'
-# alias docker='sudo docker'
-# alias docker-compose='sudo docker compose'
 
 # System utilities
 alias rm='rm --preserve-root' 
@@ -48,6 +47,9 @@ alias dnf='sudo dnf'
 
 # Navigation aliases
 alias home='cd ~'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 
 # fzf alias
 alias fzf='fzf --height 40% --layout reverse --border'
@@ -121,3 +123,71 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# HELP-PROFILE: Display all custom commands, aliases, and keybinds
+HELP-PROFILE() {
+    echo "\n🚀 \033[1;36mPersonal Profile Help\033[0m 🚀\n"
+    
+    echo "\033[1;33m📋 ALIASES\033[0m"
+    echo "├─ \033[1;32mDocker & System:\033[0m"
+    echo "│  ├─ docker          → sudo docker"
+    echo "│  ├─ start-docker    → sudo systemctl start docker"
+    echo "│  ├─ kill-docker     → stop docker socket & service"
+    echo "│  └─ lazydocker      → sudo lazydocker"
+    echo "│"
+    echo "├─ \033[1;32mSystem Utilities:\033[0m"
+    echo "│  ├─ rm              → rm --preserve-root"
+    echo "│  ├─ ls              → eza with icons & colors"
+    echo "│  ├─ dir             → eza long format with git info"
+    echo "│  ├─ restart-zsh     → source ~/.zshrc"
+    echo "│  ├─ update-cursor   → run cursor update script"
+    echo "│  ├─ drop-caches     → clear system caches"
+    echo "│  └─ dnf             → sudo dnf"
+    echo "│"
+    echo "├─ \033[1;32mNavigation:\033[0m"
+    echo "│  ├─ home            → cd ~"
+    echo "│  ├─ ..              → cd .."
+    echo "│  ├─ ...             → cd ../.."
+    echo "│  └─ ....            → cd ../../.."
+    echo "│"
+    echo "└─ \033[1;32mTools:\033[0m"
+    echo "   └─ fzf             → fzf with custom layout\n"
+    
+    echo "\033[1;33m⚡ CUSTOM FUNCTIONS\033[0m"
+    echo "├─ \033[1;35madb-reverse <port>\033[0m    → ADB port forwarding"
+    echo "│  └─ Example: adb-reverse 4000"
+    echo "│"
+    echo "├─ \033[1;35mset-fan <level>\033[0m       → Set ThinkPad fan speed"
+    echo "│  └─ Example: set-fan 6 (auto, 0-7)"
+    echo "│"
+    echo "└─ \033[1;35mHELP-PROFILE\033[0m          → Show this help (you're here!)\n"
+    
+    echo "\033[1;33m⌨️  KITTY KEYBINDS\033[0m"
+    echo "├─ \033[1;32mTabs & Windows:\033[0m"
+    echo "│  ├─ Alt+T           → New tab (in current directory)"
+    echo "│  ├─ Alt+D           → Previous tab"
+    echo "│  ├─ Alt+F           → Next tab"
+    echo "│  ├─ Alt+J           → Previous window"
+    echo "│  └─ Alt+L           → Next window"
+    echo "│"
+    echo "├─ \033[1;32mClipboard:\033[0m"
+    echo "│  ├─ Ctrl+Shift+C    → Copy to clipboard"
+    echo "│  └─ Ctrl+V          → Paste from clipboard"
+    echo "│"
+    echo "└─ \033[1;32mConfig:\033[0m"
+    echo "   ├─ F5              → Reload kitty config"
+    echo "   └─ F12             → Edit kitty config\n"
+    
+    echo "\033[1;33m🔧 SHELL INTEGRATIONS\033[0m"
+    echo "├─ \033[1;36mfzf\033[0m                   → Fuzzy finder (Ctrl+R for history)"
+    echo "├─ \033[1;36mzoxide\033[0m                → Smart cd replacement"
+    echo "├─ \033[1;36moh-my-posh\033[0m            → Custom prompt theme"
+    echo "└─ \033[1;36mzinit plugins\033[0m         → syntax highlighting, completions, suggestions\n"
+    
+    echo "\033[1;90m💡 Tip: Type any command name for usage info\033[0m"
+    echo "\033[1;90m📁 Config files: ~/.zshrc, ~/.config/kitty/kitty.conf\033[0m\n"
+}
+
+# Startup welcome message
+
+echo "\033[1;33mType\033[0m \033[1;32mHELP-PROFILE\033[0m \033[1;33mto learn more\033[0m"
