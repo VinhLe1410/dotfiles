@@ -94,24 +94,26 @@ sketchybar --add item chevron left                                      \
            --subscribe front_app front_app_switched
 
 ##### ccusage #####
-sketchybar --add item ccusage_tokens right                      \
+sketchybar --add item ccusage_label right                       \
+           --set ccusage_label icon.drawing=off                 \
+                               label="this month"               \
+                               label.color=$GREY                \
+                               label.padding_left=0             \
+                               drawing=off                      \
+           --add item ccusage_tokens right                      \
            --set ccusage_tokens icon.drawing=off                \
                                 icon.padding_left=0             \
                                 icon.padding_right=0            \
-                                label.padding_left=2            \
+                                label.padding_left=0            \
+                                padding_right=0                 \
                                 drawing=off                     \
                                 update_freq=60                  \
                                 script="$PLUGIN_DIR/ccusage.sh" \
            --add item ccusage_cost right                        \
            --set ccusage_cost icon.drawing=off                  \
-                                drawing=off                     \
-           --add item ccusage_remaining right                   \
-           --set ccusage_remaining icon=                        \
-                                icon.padding_right=2            \
-                                drawing=off                     \
-                                label.padding_left=2
+                                drawing=off
 
-sketchybar --add bracket ccusage_status ccusage_remaining ccusage_cost ccusage_tokens \
+sketchybar --add bracket ccusage_status ccusage_cost ccusage_tokens ccusage_label     \
            --set ccusage_status background.color=$SURFACE                             \
                                 background.border_color=$SURFACE_BORDER               \
                                 background.border_width=2                             \

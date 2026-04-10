@@ -2,7 +2,7 @@
 
 export PATH="/Users/$USER/.asdf/installs/nodejs/22.19.0/bin:$PATH"
 
-ITEMS=(ccusage_tokens ccusage_cost ccusage_remaining)
+ITEMS=(ccusage_tokens ccusage_cost ccusage_label)
 CURRENT_MONTH=$(date +"%Y-%m")
 
 # --- Helpers ---
@@ -25,13 +25,6 @@ color_for_cost() {
   : "${cost_int:=0}"
   if [ "$cost_int" -ge 300 ]; then echo "$COLOR_RED"
   elif [ "$cost_int" -ge 100 ]; then echo "$COLOR_YELLOW"
-  else echo "$COLOR_GREEN"; fi
-}
-
-color_for_remaining() {
-  local mins=$1
-  if [ "$mins" -lt 60 ]; then echo "$COLOR_RED"
-  elif [ "$mins" -lt 120 ]; then echo "$COLOR_YELLOW"
   else echo "$COLOR_GREEN"; fi
 }
 
@@ -76,33 +69,8 @@ fi
 formatted_cost=$(printf "$%.2f" "$total_cost")
 cost_color=$(color_for_cost "$total_cost")
 
-# --- Active block remaining time ---
-
-has_active=false
-remaining_label=""
-remaining_color="$COLOR_FG"
-
-blocks_json=$(ccusage blocks --active --json 2>/dev/null)
-if [ $? -eq 0 ] && [ -n "$blocks_json" ]; then
-  remaining_minutes=$(echo "$blocks_json" | jq -r \
-    '.blocks[] | select(.isActive == true) | .projection.remainingMinutes // empty' | head -1)
-
-  if [ -n "$remaining_minutes" ]; then
-    has_active=true
-    remaining_int=${remaining_minutes%.*}
-    remaining_label=$(printf "%02d:%02d left" $((remaining_int / 60)) $((remaining_int % 60)))
-    remaining_color=$(color_for_remaining "$remaining_int")
-  fi
-fi
-
 # --- Update sketchybar ---
 
 sketchybar --set ccusage_tokens drawing=on label="$formatted_tokens" \
-           --set ccusage_cost drawing=on label="$formatted_cost" label.color="$cost_color"
-
-if [ "$has_active" = true ]; then
-  sketchybar --set ccusage_remaining drawing=on label="$remaining_label" \
-             label.color="$remaining_color" icon.color="$remaining_color"
-else
-  sketchybar --set ccusage_remaining drawing=off
-fi
+           --set ccusage_cost drawing=on label="$formatted_cost" label.color="$cost_color" \
+           --set ccusage_label drawing=on
