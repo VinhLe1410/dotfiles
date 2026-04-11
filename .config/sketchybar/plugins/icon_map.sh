@@ -7,7 +7,8 @@ case "$1" in
 "Google Chrome")                              icon_result=":google_chrome:" ;;
 "Cursor" | "Code")                            icon_result=":code:" ;;
 "Discord" | "Vesktop")                        icon_result=":discord:" ;;
-"Docker" | "Docker Desktop" | "OrbStack")     icon_result=":docker:" ;;
+"Docker" | "Docker Desktop")                  icon_result=":docker:" ;;
+"OrbStack")                                   icon_result=":orbstack:" ;;
 "Drafts")                                     icon_result=":drafts:" ;;
 "FaceTime")                                   icon_result=":face_time:" ;;
 "Finder")                                     icon_result=":finder:" ;;
