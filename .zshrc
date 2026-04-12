@@ -5,7 +5,7 @@ export PATH="/Users/lpvinh/.local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="robbyrussell"
+ZSH_THEME="nicoulaj"
 
 plugins=(
     git
@@ -16,5 +16,3 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 eval "$(zoxide init zsh --cmd cd)"
-
-# Added by codebase-memory-mcp install

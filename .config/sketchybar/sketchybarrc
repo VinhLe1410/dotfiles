@@ -98,23 +98,20 @@ sketchybar --add item ccusage_tokens right                      \
            --set ccusage_tokens icon.drawing=off                \
                                 icon.padding_left=0             \
                                 icon.padding_right=0            \
-                                label.padding_left=0            \
-                                padding_right=4                 \
+                                label.padding_left=10            \
+                                label.padding_right=10           \
                                 drawing=off                     \
                                 update_freq=60                  \
-                                script="$PLUGIN_DIR/ccusage.sh" \
-           --add item ccusage_cost right                        \
-           --set ccusage_cost icon.drawing=off                  \
-                                drawing=off
+                                script="$PLUGIN_DIR/ccusage.sh"
 
-sketchybar --add bracket ccusage_status ccusage_cost ccusage_tokens     \
+sketchybar --add bracket ccusage_status ccusage_tokens              \
            --set ccusage_status background.color=$SURFACE                             \
                                 background.border_color=$SURFACE_BORDER               \
                                 background.border_width=2                             \
                                 background.corner_radius=8                            \
                                 background.height=29                                  \
-                                background.padding_left=4                             \
-                                background.padding_right=8                            \
+                                background.padding_left=12s                            \
+                                background.padding_right=12                           \
                                 background.drawing=on
 
 sketchybar --update
