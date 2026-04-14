@@ -15,4 +15,11 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+alias ls='lsd --group-dirs first'
+alias l='lsd -l --group-dirs first'
+alias la='lsd -a --group-dirs first'
+alias lla='lsd -la --group-dirs first'
+alias lt='lsd --tree --group-dirs first'
+
 eval "$(zoxide init zsh --cmd cd)"
