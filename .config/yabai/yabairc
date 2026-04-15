@@ -65,6 +65,7 @@ yabai -m rule --add app="^Finder$"                manage=off
 yabai -m rule --add app="^Calendar$"              manage=off
 
 yabai -m rule --add app="^Zen$"               space=^1
+yabai -m rule --add app="^Helium$"            space=^1
 yabai -m rule --add app="^Zed$"               space=^2
 yabai -m rule --add app="^Cursor$"            space=^2
 yabai -m rule --add app="^Ghostty$"           space=^3

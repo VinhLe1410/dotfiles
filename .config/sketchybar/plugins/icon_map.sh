@@ -12,8 +12,8 @@ case "$1" in
 "Drafts")                                     icon_result=":drafts:" ;;
 "FaceTime")                                   icon_result=":face_time:" ;;
 "Finder")                                     icon_result=":finder:" ;;
-"Firefox")                                    icon_result=":firefox:" ;;
 "Ghostty")                                    icon_result=":ghostty:" ;;
+"Helium")                                     icon_result=":helium:" ;;
 "Mail")                                       icon_result=":mail:" ;;
 "Messages")                                   icon_result=":messages:" ;;
 "Microsoft Edge")                             icon_result=":microsoft_edge:" ;;
