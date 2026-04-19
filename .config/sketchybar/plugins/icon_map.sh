@@ -13,6 +13,7 @@ case "$1" in
 "FaceTime")                                   icon_result=":face_time:" ;;
 "Finder")                                     icon_result=":finder:" ;;
 "Ghostty")                                    icon_result=":ghostty:" ;;
+"Warp")                                       icon_result=":warp:" ;;
 "Helium")                                     icon_result=":helium:" ;;
 "Mail")                                       icon_result=":mail:" ;;
 "Messages")                                   icon_result=":messages:" ;;

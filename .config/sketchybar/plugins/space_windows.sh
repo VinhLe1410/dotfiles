@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Queries yabai for all windows on each space and sets the label
-# to a strip of app-font icons.
+# to a strip of app-font icons (de-duplicated, alphabetically sorted).
 
 PLUGIN_DIR="$(dirname "$0")"
 
@@ -11,7 +11,8 @@ args=()
 while read -r line; do
   for space in $line; do
     icon_strip=""
-    apps=$(yabai -m query --windows --space "$space" | jq -r '.[].app' 2>/dev/null)
+    # Get unique apps sorted alphabetically
+    apps=$(yabai -m query --windows --space "$space" | jq -r '.[].app' 2>/dev/null | sort -u)
     if [ -n "$apps" ]; then
       while IFS= read -r app; do
         icon_strip+=" $("$PLUGIN_DIR/icon_map.sh" "$app")"
