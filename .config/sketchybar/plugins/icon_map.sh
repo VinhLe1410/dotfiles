@@ -35,7 +35,7 @@ case "$1" in
 "System Preferences" | "System Settings")     icon_result=":gear:" ;;
 "VSCodium")                                   icon_result=":vscodium:" ;;
 "Xcode")                                      icon_result=":xcode:" ;;
-"Zalo")                                       icon_result=":default:" ;;
+"Zalo")                                       icon_result=":messages:" ;;
 "Zed")                                        icon_result=":zed:" ;;
 "Zen" | "Zen Browser")                        icon_result=":zen_browser:" ;;
 *)                                            icon_result=":default:" ;;
