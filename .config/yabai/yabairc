@@ -69,6 +69,7 @@ yabai -m rule --add app="^Zen$"               space=^1
 yabai -m rule --add app="^Helium$"            space=^1
 yabai -m rule --add app="^Zed$"               space=^2
 yabai -m rule --add app="^Cursor$"            space=^2
+yabai -m rule --add app="^VSCodium$"          space=^2
 yabai -m rule --add app="^Ghostty$"           space=^3
 yabai -m rule --add app="^OrbStack$"          space=^3
 yabai -m rule --add app="^Postman$"           space=^3
