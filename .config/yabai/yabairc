@@ -33,21 +33,20 @@ yabai -m config \
 # ═══════════════════════════════════════════════════════════════════
 #  GLOBAL SETTINGS: Window Behavior
 # ═══════════════════════════════════════════════════════════════════
+# Window placement: new windows appear as left/top sibling
+# Insert new windows at the currently focused window
+# Keep zoom state when switching spaces/layouts
+# Draw shadows for tiled windows (requires SIP disabled)
+# No animation delay when moving/resizing windows
+# All windows are fully opaque
 
 yabai -m config \
-    # Window placement: new windows appear as left/top sibling
     window_placement             first_child \
-    # Insert new windows at the currently focused window
     window_insertion_point       focused \
-    # Keep zoom state when switching spaces/layouts
     window_zoom_persist          on \
-    # Draw shadows for tiled windows (requires SIP disabled)
     window_shadow                on \
-    # No animation delay when moving/resizing windows
     window_animation_duration    0.0 \
-    # Instant opacity transitions
     window_opacity_duration      0.0 \
-    # All windows are fully opaque
     active_window_opacity        1.0 \
     normal_window_opacity        1.0 \
     window_opacity               off
@@ -55,15 +54,15 @@ yabai -m config \
 # ═══════════════════════════════════════════════════════════════════
 #  GLOBAL SETTINGS: Layout & Spacing
 # ═══════════════════════════════════════════════════════════════════
+# Layout mode: BSP = binary space partitioning (automatic tiling)
+# New splits are 50/50
+# Auto-detect vertical vs horizontal split based on window shape
+# Don't auto-rebalance windows when tree changes
 
 yabai -m config \
-    # Layout mode: BSP = binary space partitioning (automatic tiling)
     layout                       bsp \
-    # New splits are 50/50
     split_ratio                  0.50 \
-    # Auto-detect vertical vs horizontal split based on window shape
     split_type                   auto \
-    # Don't auto-rebalance windows when tree changes
     auto_balance                 off
 
 # ═══════════════════════════════════════════════════════════════════
@@ -71,12 +70,10 @@ yabai -m config \
 # ═══════════════════════════════════════════════════════════════════
 
 yabai -m config \
-    # Padding from screen edges (menu bar, dock, sides)
     top_padding                  4 \
     bottom_padding               4 \
     left_padding                 4 \
     right_padding                4 \
-    # Gap between adjacent tiled windows
     window_gap                   5
 
 # Visual feedback: highlight insertion point with red tint
@@ -93,15 +90,15 @@ yabai -m config external_bar all:0:42
 # ═══════════════════════════════════════════════════════════════════
 #  MOUSE INTERACTION
 # ═══════════════════════════════════════════════════════════════════
+# Hold Fn key while dragging to manipulate windows
+# Left-drag moves the window
+# Right-drag resizes the window
+# Dropping a window onto another swaps their positions
 
 yabai -m config \
-    # Hold Fn key while dragging to manipulate windows
     mouse_modifier               fn \
-    # Left-drag moves the window
     mouse_action1                move \
-    # Right-drag resizes the window
     mouse_action2                resize \
-    # Dropping a window onto another swaps their positions
     mouse_drop_action            swap
 
 # ═══════════════════════════════════════════════════════════════════
