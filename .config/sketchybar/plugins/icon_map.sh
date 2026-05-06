@@ -33,6 +33,7 @@ case "$1" in
 "Slack")                                      icon_result=":slack:" ;;
 "Spotify")                                    icon_result=":spotify:" ;;
 "System Preferences" | "System Settings")     icon_result=":gear:" ;;
+"Superset")                                   icon_result=":codex:" ;;
 "VSCodium")                                   icon_result=":vscodium:" ;;
 "Xcode")                                      icon_result=":xcode:" ;;
 "Zalo")                                       icon_result=":messages:" ;;

@@ -1,50 +1,112 @@
 #!/usr/bin/env sh
 
+# ┌─────────────────────────────────────────────────────────────────┐
+# │                        YABAI CONFIG                             │
+# │  A tiling window manager for macOS                              │
+# │  https://github.com/asmvik/yabai                                │
+# └─────────────────────────────────────────────────────────────────┘
 #
-# for this to work you must configure sudo such that
-# it will be able to run the command without password
-#
-# see this wiki page for information:
-#  - https://github.com/asmvik/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition
-#
+# REQUIREMENTS:
+#   • SIP must be partially disabled (for scripting addition)
+#   • Configure sudoers to allow `yabai --load-sa` without password:
+#     https://github.com/asmvik/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition
+
+# ═══════════════════════════════════════════════════════════════════
+#  SCRIPTING ADDITION
+# ═══════════════════════════════════════════════════════════════════
+
+# Reload the scripting addition when Dock restarts (e.g., after macOS updates)
+# Without this, yabai loses control of spaces, shadows, etc. after Dock restarts
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 sudo yabai --load-sa
-#
 
-# global settings
-yabai -m config                                 \
-    mouse_follows_focus          on             \
+# ═══════════════════════════════════════════════════════════════════
+#  GLOBAL SETTINGS: Focus & Mouse
+# ═══════════════════════════════════════════════════════════════════
+
+yabai -m config \
+    # When focusing a window, move the cursor to its center
+    mouse_follows_focus          on \
+    # Don't auto-focus windows when hovering (requires click to focus)
     focus_follows_mouse          off
 
-yabai -m config                                 \
-    display_arrangement_order    default        \
-    window_origin_display        default        \
-    window_placement             first_child    \
-    window_insertion_point       focused        \
-    window_zoom_persist          on             \
-    window_shadow                on             \
-    window_animation_duration    0.0            \
-    window_opacity_duration      0.0            \
-    active_window_opacity        1.0            \
-    normal_window_opacity        1.0            \
+# ═══════════════════════════════════════════════════════════════════
+#  GLOBAL SETTINGS: Window Behavior
+# ═══════════════════════════════════════════════════════════════════
+
+yabai -m config \
+    # Window placement: new windows appear as left/top sibling
+    window_placement             first_child \
+    # Insert new windows at the currently focused window
+    window_insertion_point       focused \
+    # Keep zoom state when switching spaces/layouts
+    window_zoom_persist          on \
+    # Draw shadows for tiled windows (requires SIP disabled)
+    window_shadow                on \
+    # No animation delay when moving/resizing windows
+    window_animation_duration    0.0 \
+    # Instant opacity transitions
+    window_opacity_duration      0.0 \
+    # All windows are fully opaque
+    active_window_opacity        1.0 \
+    normal_window_opacity        1.0 \
     window_opacity               off
 
-yabai -m config                                 \
-    insert_feedback_color        0xffd75f5f     \
-    split_ratio                  0.50           \
-    split_type                   auto           \
-    auto_balance                 off            \
-    top_padding                  4              \
-    bottom_padding               4              \
-    left_padding                 4              \
-    right_padding                4              \
-    window_gap                   5              \
-    external_bar                 all:0:42       \
-    layout                       bsp            \
-    mouse_modifier               fn             \
-    mouse_action1                move           \
-    mouse_action2                resize         \
+# ═══════════════════════════════════════════════════════════════════
+#  GLOBAL SETTINGS: Layout & Spacing
+# ═══════════════════════════════════════════════════════════════════
+
+yabai -m config \
+    # Layout mode: BSP = binary space partitioning (automatic tiling)
+    layout                       bsp \
+    # New splits are 50/50
+    split_ratio                  0.50 \
+    # Auto-detect vertical vs horizontal split based on window shape
+    split_type                   auto \
+    # Don't auto-rebalance windows when tree changes
+    auto_balance                 off
+
+# ═══════════════════════════════════════════════════════════════════
+#  SPACING
+# ═══════════════════════════════════════════════════════════════════
+
+yabai -m config \
+    # Padding from screen edges (menu bar, dock, sides)
+    top_padding                  4 \
+    bottom_padding               4 \
+    left_padding                 4 \
+    right_padding                4 \
+    # Gap between adjacent tiled windows
+    window_gap                   5
+
+# Visual feedback: highlight insertion point with red tint
+yabai -m config insert_feedback_color 0xffd75f5f
+
+# ═══════════════════════════════════════════════════════════════════
+#  EXTERNAL STATUS BAR
+# ═══════════════════════════════════════════════════════════════════
+
+# Tell yabai about your status bar (e.g., Sketchybar, Übersicht)
+# Format: all:<top_padding>:<bottom_padding>
+yabai -m config external_bar all:0:42
+
+# ═══════════════════════════════════════════════════════════════════
+#  MOUSE INTERACTION
+# ═══════════════════════════════════════════════════════════════════
+
+yabai -m config \
+    # Hold Fn key while dragging to manipulate windows
+    mouse_modifier               fn \
+    # Left-drag moves the window
+    mouse_action1                move \
+    # Right-drag resizes the window
+    mouse_action2                resize \
+    # Dropping a window onto another swaps their positions
     mouse_drop_action            swap
+
+# ═══════════════════════════════════════════════════════════════════
+#  SPACES: Label all spaces 1-10
+# ═══════════════════════════════════════════════════════════════════
 
 yabai -m space 1 --label 1
 yabai -m space 2 --label 2
@@ -57,6 +119,11 @@ yabai -m space 8 --label 8
 yabai -m space 9 --label 9
 yabai -m space 10 --label 10
 
+# ═══════════════════════════════════════════════════════════════════
+#  WINDOW RULES: Floating Apps (manage=off)
+# ═══════════════════════════════════════════════════════════════════
+
+# System apps that manage their own windows — let macOS handle them
 yabai -m rule --add app="^System Preferences$"    manage=off
 yabai -m rule --add app="^System Settings$"       manage=off
 yabai -m rule --add app="^Raycast$"               manage=off
@@ -65,29 +132,74 @@ yabai -m rule --add app="^Finder$"                manage=off
 yabai -m rule --add app="^Calendar$"              manage=off
 yabai -m rule --add app="^TabTab$"                manage=off
 
-yabai -m rule --add app="^Zen$"               space=^1
-yabai -m rule --add app="^Helium$"            space=^1
-yabai -m rule --add app="^Zed$"               space=^2
-yabai -m rule --add app="^Cursor$"            space=^2
-yabai -m rule --add app="^VSCodium$"          space=^2
-yabai -m rule --add app="^Ghostty$"           space=^3
-yabai -m rule --add app="^OrbStack$"          space=^3
-yabai -m rule --add app="^Postman$"           space=^3
-yabai -m rule --add app="^Warp$"              space=^3
-yabai -m rule --add app="^Slack$"             space=^4
-yabai -m rule --add app="^Discord$"           space=^4
-yabai -m rule --add app="^Vesktop$"           space=^4
-yabai -m rule --add app="^Zalo$"              space=^4
-yabai -m rule --add app="^Microsoft Teams$"   space=^4
-yabai -m rule --add app="^Facebook$"          space=^4
-yabai -m rule --add app="^Obsidian$"          space=^5
-yabai -m rule --add app="^Notion$"            space=^5
-yabai -m rule --add app="^Claude$"            space=^6
-yabai -m rule --add app="^Spotify$"           space=^8
+# ═══════════════════════════════════════════════════════════════════
+#  WINDOW RULES: App → Space Mapping
+# ═══════════════════════════════════════════════════════════════════
+#
+#  Spaces:
+#    1  → Media & Floating apps     (Zen, Helium)
+#    2  → Code & IDE                (Zed, Cursor, VSCodium)
+#    3  → Terminal & Dev Tools      (Warp, Ghostty, OrbStack, Postman)
+#    4  → Communication             (Slack, Discord, Teams, Zalo)
+#    5  → Notes & Docs              (Obsidian, Notion)
+#    6  → AI & Assistants           (Claude)
+#    8  → Music                     (Spotify)
+#
+#  The ^ prefix means: send window to space AND switch focus to it
+# ═══════════════════════════════════════════════════════════════════
 
+# Space 1 — Media & Floating Apps
+yabai -m rule --add app="^Zen$"                   space=^1
+yabai -m rule --add app="^Helium$"                space=^1
+
+# Space 2 — Code & IDE
+yabai -m rule --add app="^Zed$"                   space=^2
+yabai -m rule --add app="^Cursor$"                space=^2
+yabai -m rule --add app="^VSCodium$"              space=^2
+
+# Space 3 — Terminal & Dev Tools
+yabai -m rule --add app="^Warp$"                  space=^3
+yabai -m rule --add app="^Ghostty$"               space=^3
+yabai -m rule --add app="^OrbStack$"              space=^3
+yabai -m rule --add app="^Postman$"               space=^3
+
+# Space 4 — Communication
+yabai -m rule --add app="^Slack$"                 space=^4
+yabai -m rule --add app="^Discord$"               space=^4
+yabai -m rule --add app="^Vesktop$"               space=^4
+yabai -m rule --add app="^Zalo$"                  space=^4
+yabai -m rule --add app="^Microsoft Teams$"       space=^4
+yabai -m rule --add app="^Facebook$"              space=^4
+
+# Space 5 — Notes & Docs
+yabai -m rule --add app="^Obsidian$"              space=^5
+yabai -m rule --add app="^Notion$"                space=^5
+
+# Space 6 — AI & Assistants
+yabai -m rule --add app="^Claude$"                space=^6
+
+# Space 8 — Music
+yabai -m rule --add app="^Spotify$"               space=^8
+
+# Apply rules to already-open windows
 yabai -m rule --apply
 
-yabai -m signal --add app='^Ghostty$' event=window_created action='yabai -m space --layout bsp'
-yabai -m signal --add app='^Ghostty$' event=window_destroyed action='yabai -m space --layout bsp'
+# ═══════════════════════════════════════════════════════════════════
+#  SIGNALS: Auto-fix layout for Ghostty
+# ═══════════════════════════════════════════════════════════════════
+#
+#  Terminal apps can leave the BSP tree unbalanced when creating/
+#  destroying windows rapidly. These signals rebuild the layout
+#  whenever Ghostty opens or closes a window.
+# ═══════════════════════════════════════════════════════════════════
+
+yabai -m signal \
+    --add app='^Ghostty$' event=window_created action='yabai -m space --layout bsp'
+yabai -m signal \
+    --add app='^Ghostty$' event=window_destroyed action='yabai -m space --layout bsp'
+
+# ═══════════════════════════════════════════════════════════════════
+#  DONE
+# ═══════════════════════════════════════════════════════════════════
 
 echo "yabai configuration loaded.."

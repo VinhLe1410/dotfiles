@@ -9,6 +9,7 @@
 [[ -f ~/.secrets ]] && source ~/.secrets
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 export PATH="/Users/lpvinh/.local/bin:$PATH"
+export PATH="/Users/lpvinh/.bun/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -33,6 +34,3 @@ eval "$(zoxide init zsh --cmd cd)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# opencode
-export PATH=/Users/lpvinh/.opencode/bin:$PATH
